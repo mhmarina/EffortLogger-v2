@@ -22,7 +22,7 @@ public class EffortLog {
 	public String toString() {
 		String log = "";
 		log += "Project Name: " + this.projectName +
-				"\nStart Time: " + this.startTime + "\tStop Time: " + this.stopTime + "\tTotal Time: " + this.totalSecs + "s\n" +
+				"\n" + this.startTime + "\t" + this.stopTime + "\tTotal Time: " + this.totalSecs + "s\n" +
 				"Life Cycle Step: " + this.lifeCycleStep +
 				"\nEffort Category: " + this.effortCategory +
 				"\nDeliverable: " + this.deliverable + "\n";

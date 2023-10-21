@@ -47,7 +47,7 @@ public class EffortLogger extends Application{
         logs.setContent(logsPane);
         
         TabPane tabPane = new TabPane();
-        tabPane.getTabs().addAll(mainTab, editor, defects, planningPoker, logs);
+        tabPane.getTabs().addAll(mainTab, logs, planningPoker);
         tabPane.setTabClosingPolicy(TabClosingPolicy.UNAVAILABLE);
         root.getChildren().add(tabPane);
         

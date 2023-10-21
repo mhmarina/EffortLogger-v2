@@ -33,7 +33,8 @@ public class MainConsolePane extends VBox {
     private Timeline timeline;
     private int hours;
     private int minutes;
-    private int seconds; // this is the total time
+    private int seconds; 
+    private int totalTime;
     private boolean started; // determines whether the clock has started
     private Date date;
 	private String projectName = "null";
@@ -148,6 +149,7 @@ public class MainConsolePane extends VBox {
             	hours = 0;
             	minutes = 0;
             	seconds = 0;
+            	totalTime = 0;
             	updateTimer();
                 started = true;
                 timeline.play();
@@ -176,7 +178,7 @@ public class MainConsolePane extends VBox {
                 endTimeLabel.setText("Stop Time: " + date.toString());
                 timeLabel.setBackground(new Background(new BackgroundFill(Color.RED, null, null)));
                 
-                effortLog = new EffortLog(seconds, startTimeLabel.getText(), endTimeLabel.getText(),
+                effortLog = new EffortLog(totalTime, startTimeLabel.getText(), endTimeLabel.getText(),
                 		    projectName, lifeCycleStep, effortCategory, deliverable);
                 this.logs.add(effortLog);
                 System.out.println(logs.size());
@@ -185,16 +187,17 @@ public class MainConsolePane extends VBox {
     }
 
     private void updateTimer() {
+    	totalTime++; // in seconds
         seconds++;
         if (seconds == 60) {
-            seconds = 0;
+            int s = 0;
             minutes++;
             if (minutes == 60) {
                 minutes = 0;
                 hours++;
             }
         }
-        timeLabel.setText(formatTime(seconds));
+        timeLabel.setText(formatTime(totalTime));
     }
     
     public String formatTime(int sec) {
