@@ -49,10 +49,8 @@ public class MainConsolePane extends VBox {
 	private String [] lifeCycleList;
 	private String [] effortCatList;
 	private String [] deliverablesList;
-	private ArrayList<EffortLog> effortLogs; // possible placeholder for database
 	
-    public MainConsolePane() {
-    	effortLogs = new ArrayList<>();
+    public MainConsolePane(ArrayList<EffortLog> effortLogs) {
         timeLabel = new Label("0 hours 0 minutes 0 seconds");
         timeLabel.setBackground(new Background(new BackgroundFill(Color.RED, null, null)));
         Font header = Font.font("System", FontWeight.BOLD, 20);
@@ -113,7 +111,7 @@ public class MainConsolePane extends VBox {
         setAlignment(Pos.CENTER);
 
         startTimerButton.setOnAction(new StartTimerHandler());
-        stopTimerButton.setOnAction(new StopTimerHandler());
+        stopTimerButton.setOnAction(new StopTimerHandler(effortLogs));
 
         timeline = new Timeline(new KeyFrame(Duration.seconds(1), e -> updateTimer()));
         timeline.setCycleCount(Timeline.INDEFINITE);
@@ -162,6 +160,10 @@ public class MainConsolePane extends VBox {
         }
     }
     private class StopTimerHandler implements EventHandler<ActionEvent> {
+    	private ArrayList<EffortLog> logs;
+    	public StopTimerHandler(ArrayList<EffortLog> l) {
+    		this.logs = l;
+    	}
         @Override
         public void handle(ActionEvent event) {
             if (started) {
@@ -176,10 +178,8 @@ public class MainConsolePane extends VBox {
                 
                 effortLog = new EffortLog(seconds, startTimeLabel.getText(), endTimeLabel.getText(),
                 		    projectName, lifeCycleStep, effortCategory, deliverable);
-                effortLogs.add(effortLog);
-                for(int i = 0; i < effortLogs.size(); i++) {
-                    System.out.println(effortLogs.get(i).toString());
-                }
+                this.logs.add(effortLog);
+                System.out.println(logs.size());
             }
         }
     }
