@@ -25,6 +25,7 @@ import java.util.Date;
 
 public class MainConsolePane extends VBox {
 
+	private Label title;
     private Label timeLabel;
     private Label startTimeLabel;
     private Label endTimeLabel;
@@ -52,6 +53,8 @@ public class MainConsolePane extends VBox {
 	private String [] deliverablesList;
 	
     public MainConsolePane(ArrayList<EffortLog> effortLogs) {
+    	title = new Label("Welcome To EffortLogger!");
+    	title.setFont(Font.font("System", FontWeight.BOLD, 32));
         timeLabel = new Label("0 hours 0 minutes 0 seconds");
         timeLabel.setBackground(new Background(new BackgroundFill(Color.RED, null, null)));
         Font header = Font.font("System", FontWeight.BOLD, 20);
@@ -107,7 +110,7 @@ public class MainConsolePane extends VBox {
         startTimeLabel = new Label("Start Time: ");
         endTimeLabel = new Label("Stop Time: ");
 
-        getChildren().addAll(comboBoxes,timeLabel,startTimerButton, stopTimerButton, startTimeLabel, endTimeLabel);
+        getChildren().addAll(title,comboBoxes,timeLabel,startTimerButton, stopTimerButton, startTimeLabel, endTimeLabel);
         setSpacing(10);
         setAlignment(Pos.CENTER);
 
