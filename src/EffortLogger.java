@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Tab;
@@ -11,6 +13,8 @@ public class EffortLogger extends Application{
 	public static void main(String [] args) {
 		launch(args);
 	}
+	
+	private ArrayList<EffortLog> effortLogs;
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
@@ -24,9 +28,12 @@ public class EffortLogger extends Application{
         primaryStage.setTitle("EffortLogger 2.0");
         primaryStage.show();
         
+        effortLogs = new ArrayList<>();
+
+        
         Tab mainTab = new Tab(); // this tab will contain the clock function
         mainTab.setText("Main Console");
-        MainConsolePane mainPane = new MainConsolePane();
+        MainConsolePane mainPane = new MainConsolePane(effortLogs);
         mainTab.setContent(mainPane);
         Tab editor = new Tab();
         editor.setText("Editor");
@@ -36,6 +43,8 @@ public class EffortLogger extends Application{
         planningPoker.setText("Planning Poker");
         Tab logs = new Tab();
         logs.setText("Logs");
+        Logs logsPane = new Logs(effortLogs);
+        logs.setContent(logsPane);
         
         TabPane tabPane = new TabPane();
         tabPane.getTabs().addAll(mainTab, editor, defects, planningPoker, logs);
