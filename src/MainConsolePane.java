@@ -74,10 +74,13 @@ public class MainConsolePane extends VBox {
         projectCB.setValue("Project Name");
         projectCB.getItems().addAll(projectList);
         projectCB.setOnAction(new PCBHandler());
+        projectCB.setEditable(true);
+        
         lifeCyclesCB = new ComboBox();
         lifeCyclesCB.getItems().addAll(lifeCycleList);
         lifeCyclesCB.setValue("Life Cycle Stage");
         lifeCyclesCB.setOnAction(new LCCBHandler());
+        
         effortCatCB = new ComboBox();
         effortCatCB.setValue("Effort Category");
         effortCatCB.getItems().addAll(effortCatList);
