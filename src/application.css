@@ -1,0 +1,14 @@
+.root{
+	-fx-background-color: 'lightcyan';
+}
+
+.button{
+	
+}
+
+.button:hover{
+}
+
+#scrollpane{
+	-fx-border-color: 'salmon';
+}
