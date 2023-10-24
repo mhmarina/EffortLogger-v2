@@ -23,6 +23,8 @@ public class EffortLogger extends Application{
         StackPane root = new StackPane();
         // Create a Scene
         Scene scene = new Scene(root, 800, 600);
+        String css = this.getClass().getResource("application.css").toExternalForm();
+        scene.getStylesheets().add(css);
         // Set the scene for the stage
         primaryStage.setScene(scene);
         primaryStage.setTitle("EffortLogger 2.0");

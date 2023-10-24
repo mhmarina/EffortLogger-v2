@@ -37,7 +37,6 @@ public class Logs extends VBox {
             for (EffortLog log : log) {
                 String logString = log.toString();
                 Text logText = new Text(logString);
-                logText.setStyle("-fx-border-color: gray; -fx-border-width: 0 0 1 0;"); // Add bottom border
                 logsContainer.getChildren().add(logText);
             }
         }
