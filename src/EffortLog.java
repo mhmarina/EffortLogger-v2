@@ -8,8 +8,9 @@ public class EffortLog {
 	private String effortCategory;
 	private String deliverable;
 	
-	//default constructor
+	//overloaded constructor
 	public EffortLog(int ts, String s, String st, String p, String lc, String ec, String d) {
+		// all necessary information in an effort log
 		this.totalSecs = ts;
 		this.startTime = s;
 		this.stopTime = st;
@@ -20,6 +21,7 @@ public class EffortLog {
 	}
 	
 	public String toString() {
+		// to be used in logs console
 		String log = "";
 		log += "Project Name: " + this.projectName +
 				"\n" + this.startTime + "\t" + this.stopTime + "\tTotal Time: " + this.totalSecs + "s\n" +

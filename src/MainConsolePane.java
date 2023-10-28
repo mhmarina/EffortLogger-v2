@@ -53,6 +53,7 @@ public class MainConsolePane extends VBox {
 	private String [] deliverablesList;
 	
     public MainConsolePane(ArrayList<EffortLog> effortLogs) {
+    	// general structure of main console
     	title = new Label("Welcome To EffortLogger!");
     	title.setFont(Font.font("System", FontWeight.BOLD, 32));
         timeLabel = new Label("0 hours 0 minutes 0 seconds");
@@ -60,6 +61,7 @@ public class MainConsolePane extends VBox {
         Font header = Font.font("System", FontWeight.BOLD, 20);
         timeLabel.setFont(header);
         
+        // options for comboboxes
         projectList = new ArrayList<>();
         projectList.add("Business Project");
         projectList.add("Development Project");
@@ -90,6 +92,7 @@ public class MainConsolePane extends VBox {
         deliverableCB.getItems().addAll(deliverablesList);
         deliverableCB.setOnAction(new DCBHandler());
         
+        // style comboboxes uniformly in a gridpane
         GridPane comboBoxes = new GridPane();
         comboBoxes.add(projectCB, 0, 0);
         comboBoxes.add(lifeCyclesCB, 0, 1);
@@ -97,7 +100,7 @@ public class MainConsolePane extends VBox {
         comboBoxes.add(deliverableCB, 1, 1);
         comboBoxes.setAlignment(Pos.CENTER);
         
-        double comboBoxWidth = 200.0; // You can adjust this width as needed
+        double comboBoxWidth = 200.0; 
         projectCB.setPrefWidth(comboBoxWidth);
         lifeCyclesCB.setPrefWidth(comboBoxWidth);
         effortCatCB.setPrefWidth(comboBoxWidth);
@@ -107,7 +110,8 @@ public class MainConsolePane extends VBox {
         for (Node node : comboBoxes.getChildren()) {
             GridPane.setMargin(node, margin);
         }
-   
+        
+        // buttons for functionality
         startTimerButton = new Button("Start Timer");
         stopTimerButton = new Button("Stop Timer");
         startTimeLabel = new Label("Start Time: ");
@@ -120,6 +124,7 @@ public class MainConsolePane extends VBox {
         startTimerButton.setOnAction(new StartTimerHandler());
         stopTimerButton.setOnAction(new StopTimerHandler(effortLogs));
 
+        // this is to show the timer going
         timeline = new Timeline(new KeyFrame(Duration.seconds(1), e -> updateTimer()));
         timeline.setCycleCount(Timeline.INDEFINITE);
     }
@@ -128,24 +133,28 @@ public class MainConsolePane extends VBox {
 		@Override
 		public void handle(ActionEvent event) {
 			projectName = projectCB.getValue();
+			System.out.println(projectName + " selected");
 		}
     }
     private class LCCBHandler implements EventHandler<ActionEvent> {
 		@Override
 		public void handle(ActionEvent event) {
 			lifeCycleStep = lifeCyclesCB.getValue();
+			System.out.println(lifeCycleStep + " selected");
 		}
     }    
     private class ECCBHandler implements EventHandler<ActionEvent> {
 		@Override
 		public void handle(ActionEvent event) {
 			effortCategory = effortCatCB.getValue();
+			System.out.println(effortCategory + " selected");
 		}
     }
     private class DCBHandler implements EventHandler<ActionEvent> {
 		@Override
 		public void handle(ActionEvent event) {
 			deliverable = deliverableCB.getValue();
+			System.out.println(deliverable + " selected");
 		}
     }
     private class StartTimerHandler implements EventHandler<ActionEvent> {
@@ -165,6 +174,7 @@ public class MainConsolePane extends VBox {
                 startTimeLabel.setText("Start Time: " + date.toString());
                 timeLabel.setBackground(new Background(new BackgroundFill(Color.LIGHTGREEN, null, null)));
             }
+        	System.out.println("Clock Started at " + date);
         }
     }
     private class StopTimerHandler implements EventHandler<ActionEvent> {
@@ -187,12 +197,13 @@ public class MainConsolePane extends VBox {
                 effortLog = new EffortLog(totalTime, startTimeLabel.getText(), endTimeLabel.getText(),
                 		    projectName, lifeCycleStep, effortCategory, deliverable);
                 this.logs.add(effortLog);
-                System.out.println(logs.size());
             }
+        	System.out.println("Clock Stopped at " + date);
         }
     }
 
     private void updateTimer() {
+    	// for timeline
     	totalTime++; // in seconds
         seconds++;
         if (seconds == 60) {
@@ -207,6 +218,7 @@ public class MainConsolePane extends VBox {
     }
     
     public String formatTime(int sec) {
+    	// for date in main console as well as in logs
         int s = sec % 60;
         int m = (sec / 60) % 60;
         int h = sec / 3600;

@@ -14,7 +14,7 @@ public class EffortLogger extends Application{
 		launch(args);
 	}
 	
-	public ArrayList<EffortLog> effortLogs;
+	public ArrayList<EffortLog> effortLogs; // placeholder for database
 	private StackPane root;
 	private Scene scene;
 	private Tab mainTab;
@@ -40,6 +40,7 @@ public class EffortLogger extends Application{
         
         effortLogs = new ArrayList<>();
 
+        // create different tabs/ consoles in EffortLogger
         mainTab = new Tab(); // this tab will contain the clock function
         mainTab.setText("Main Console");
         MainConsolePane mainPane = new MainConsolePane(effortLogs);

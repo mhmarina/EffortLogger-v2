@@ -18,6 +18,7 @@ public class Logs extends VBox {
     public Logs(ArrayList<EffortLog> effortLogs) {
         reload = new Button("Load Logs");
         reload.setOnAction(new LoadLogsHandler(effortLogs));
+        // display inside vbox
         logsContainer = new VBox();
 
         scrollPane = new ScrollPane(logsContainer);
@@ -30,18 +31,22 @@ public class Logs extends VBox {
 
     private class LoadLogsHandler implements EventHandler<ActionEvent> {
         ArrayList<EffortLog> log;
-
+    
         public LoadLogsHandler(ArrayList<EffortLog> l) {
             this.log = l;
         }
 
         public void handle(ActionEvent event) {
+        	int numLogs = 0;
             logsContainer.getChildren().clear();
             for (EffortLog log : log) {
+            	// use toString method in EffortLog class
                 String logString = log.toString();
                 Text logText = new Text(logString);
                 logsContainer.getChildren().add(logText);
+                numLogs ++;
             }
+            System.out.println(numLogs + " logs loaded");
         }
     }
 }
