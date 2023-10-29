@@ -28,6 +28,8 @@ public class EffortLogger extends Application{
 	public void start(Stage primaryStage) throws Exception {
 		// TODO Auto-generated method stub
 		// Create a StackPane as the root node
+		DatabaseConnection.getConnection();
+		DB_TableCreation.createTable();
         root = new StackPane();
         // Create a Scene
         scene = new Scene(root, 800, 600);

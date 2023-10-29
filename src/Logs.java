@@ -39,14 +39,9 @@ public class Logs extends VBox {
         public void handle(ActionEvent event) {
         	int numLogs = 0;
             logsContainer.getChildren().clear();
-            for (EffortLog log : log) {
-            	// use toString method in EffortLog class
-                String logString = log.toString();
-                Text logText = new Text(logString);
-                logsContainer.getChildren().add(logText);
-                numLogs ++;
-            }
-            System.out.println(numLogs + " logs loaded");
+            Text logText = new Text(EffortLogTableOps.readEffortLog());
+            logsContainer.getChildren().add(logText);
+ 
         }
     }
 }
