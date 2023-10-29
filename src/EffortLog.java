@@ -1,4 +1,7 @@
-
+//importing necessary packages for parsing start and end time for effort log database
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 public class EffortLog {
 	private int totalSecs;
 	private String startTime;
@@ -18,6 +21,18 @@ public class EffortLog {
 		this.lifeCycleStep = lc;
 		this.effortCategory = ec;
 		this.deliverable = d;
+		String startT = s.replace("Start Time: ", "");
+		String endT = st.replace("Stop Time: ", "");	
+		SimpleDateFormat dFormat = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy");
+		Timestamp startTimeStamp = null;
+		Timestamp stopTimeStamp = null;
+		try {
+			startTimeStamp = new Timestamp(dFormat.parse(startT).getTime());
+			stopTimeStamp = new Timestamp(dFormat.parse(endT).getTime());
+		} catch (ParseException err) {
+			err.printStackTrace();
+		}
+		EffortLogTableOps.insertEffortLog(this.projectName, startTimeStamp, stopTimeStamp, this.lifeCycleStep, this.effortCategory, this.deliverable);
 	}
 	
 	public String toString() {
