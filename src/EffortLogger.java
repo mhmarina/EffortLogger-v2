@@ -42,6 +42,7 @@ public class EffortLogger extends Application{
         
         effortLogs = new ArrayList<>();
 
+
         // create different tabs/ consoles in EffortLogger
         mainTab = new Tab(); // this tab will contain the clock function
         mainTab.setText("Main Console");
@@ -67,5 +68,115 @@ public class EffortLogger extends Application{
         tabPane.setTabClosingPolicy(TabClosingPolicy.UNAVAILABLE);
         root.getChildren().add(tabPane);
         
+	     grid = new GridPane();
+	     grid.setAlignment(Pos.CENTER);
+	     grid.setHgap(10);
+	     grid.setVgap(10);
+	     grid.setPadding(new Insets(25, 25, 25, 25));
+
+	     title = new Text("Please Login");
+	     title.setFont(Font.font("System", 20));
+	     grid.add(title, 0, 0, 2, 1);
+
+	     userLabel = new Label("Username:");
+	     grid.add(userLabel, 0, 1);
+
+	     userTextField = new TextField();
+	     grid.add(userTextField, 1, 1);
+
+	     passwordLabel = new Label("Password:");
+	     grid.add(passwordLabel, 0, 2);
+
+	     passwordField = new PasswordField();
+	     grid.add(passwordField, 1, 2);
+
+	     loginButton = new Button("Login");
+	     grid.add(loginButton, 1, 3);
+	        
+	     createNewAccount = new Button("Create Account");
+	     grid.add(createNewAccount, 1, 4);
+
+	        loginButton.setOnAction(event -> {
+	            String username = userTextField.getText();
+	            String password = passwordField.getText();
+
+	            if (isValid(username, password)) {
+	                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+	                alert.setTitle("Success");
+	                alert.setHeaderText(null);
+	                alert.setContentText("You've successfully logged in!");
+	                alert.showAndWait();
+	            
+	/***redirect to main console***/
+	                
+		        	root = new StackPane();
+			        // Create a Scene
+			        scene = new Scene(root, 800, 600);
+			        String css = this.getClass().getResource("application.css").toExternalForm();
+			        scene.getStylesheets().add(css);
+			        // Set the scene for the stage
+			        primaryStage.setScene(scene);
+			        primaryStage.setTitle("EffortLogger 2.0");
+			        primaryStage.show();
+			        
+			        effortLogs = new ArrayList<>();
+			
+			        mainTab = new Tab(); // this tab will contain the clock function
+			        mainTab.setText("Main Console");
+			        MainConsolePane mainPane = new MainConsolePane(effortLogs);
+			        mainTab.setContent(mainPane);
+			        
+			        editor = new Tab();
+			        editor.setText("Editor");
+			        
+			        defects = new Tab();
+			        defects.setText("Defect Console");
+			        
+			        planningPoker = new Tab();
+			        planningPoker.setText("Planning Poker");
+			        
+			        logs = new Tab();
+			        logs.setText("Logs");
+			        Logs logsPane = new Logs(effortLogs);
+			        logs.setContent(logsPane);
+			        
+			        tabPane = new TabPane();
+			        tabPane.getTabs().addAll(mainTab, logs, planningPoker);
+			        tabPane.setTabClosingPolicy(TabClosingPolicy.UNAVAILABLE);
+			        root.getChildren().add(tabPane);
+	 /***end of redirect to main console***/
+	        		
+	            } else {
+	                Alert alert = new Alert(Alert.AlertType.ERROR);
+	                alert.setTitle("Invalid Credentials");
+	                alert.setHeaderText(null);
+	                alert.setContentText("Your username and password do not match.");
+	                alert.showAndWait();
+	            }
+	        });
+	        
+	        createNewAccount.setOnAction(event -> { // open new window to create an account
+	        	AccountCreatorPane createAccount = new AccountCreatorPane();
+	            createAccount.start(new Stage());
+	        });
+	        
+	        Scene scene_login = new Scene(grid, 300, 275);
+	        primaryStage.setScene(scene_login);
+	        primaryStage.show();		
+		
+	}
+	
+	private boolean isValid(String username, String password) {
+		
+		//general username for all employees is team32
+		//general password for all employees is mssci
+		if (username.equals("team32")) {
+			if(password.equals("mssci")) {
+				return true;
+			}
+		}
+		return false;
+		
+>>>>>>> Stashed changes
 	}
 }
