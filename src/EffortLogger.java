@@ -57,9 +57,11 @@ public class EffortLogger extends Application{
 	public void start(Stage primaryStage) throws Exception {
     
 		// TODO Auto-generated method stub
-		// Create a StackPane as the root node
+		//Establishing a connection to the database
 		DatabaseConnection.getConnection();
+		//creating a table in the database
 		DB_TableCreation.createTable();
+		// Create a StackPane as the root node
         root = new StackPane();
         // Create a Scene
         scene = new Scene(root, 800, 600);
@@ -70,7 +72,7 @@ public class EffortLogger extends Application{
         primaryStage.setTitle("EffortLogger 2.0");
         primaryStage.show();
         
-        effortLogs = new ArrayList<>()
+        effortLogs = new ArrayList<>();
 			
 	/***login portion***/	
 		 primaryStage.setTitle("Login");
@@ -118,8 +120,8 @@ public class EffortLogger extends Application{
 		        	root = new StackPane();
 			        // Create a Scene
 			        scene = new Scene(root, 800, 600);
-			        String css = this.getClass().getResource("application.css").toExternalForm();
-			        scene.getStylesheets().add(css);
+			        String cse = this.getClass().getResource("application.css").toExternalForm();
+			        scene.getStylesheets().add(cse);
 			        // Set the scene for the stage
 			        primaryStage.setScene(scene);
 			        primaryStage.setTitle("EffortLogger 2.0");
@@ -140,6 +142,8 @@ public class EffortLogger extends Application{
 			        
 			        planningPoker = new Tab();
 			        planningPoker.setText("Planning Poker");
+			        PlanningPokerModule pPoker = new PlanningPokerModule();
+			        planningPoker.setContent(pPoker);
 			        
 			        logs = new Tab();
 			        logs.setText("Logs");

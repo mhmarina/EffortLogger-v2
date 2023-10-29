@@ -39,6 +39,7 @@ public class Logs extends VBox {
         public void handle(ActionEvent event) {
         	int numLogs = 0;
             logsContainer.getChildren().clear();
+            //read from the database
             Text logText = new Text(EffortLogTableOps.readEffortLog());
             logsContainer.getChildren().add(logText);
  

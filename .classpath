@@ -11,6 +11,6 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="/Users/srivan/Documents/Fall 2023/CSE 360/Phase 4/h2-2.2.224.jar"/>
+	<classpathentry kind="lib" path="/Users/srivan/Documents/Fall 2023/CSE 360/Phase 4/EffortLogger-v2/lib/h2-2.2.224.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
