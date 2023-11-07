@@ -47,7 +47,7 @@ public class EffortLogger extends Application{
 	private PasswordField passwordField;
 	private Button loginButton;
 	private Button createNewAccount;
-//	private Scene scene_login;
+	private Scene scene_login;
 	private boolean happen = false;
 	private String username;
 	private String password;

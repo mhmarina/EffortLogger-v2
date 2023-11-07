@@ -59,6 +59,9 @@ public class Logs extends VBox {
             else {
             	String target = search.getText();
                 Text logText = new Text(EffortLogTableOps.searchEffortLog(target));
+                if(logText.getText().equals("")) {
+                	logText.setText("No matching patterns found.");
+                }
                 logsContainer.getChildren().add(logText);
             }
         }
