@@ -42,6 +42,46 @@ public class EffortLogTableOps {
         }
     }
 
+    public static String searchEffortLog(String target) {
+        Connection connection = DatabaseConnection.getConnection(); // Get the database connection
+        PreparedStatement preparedStatement = null; // Prepared statement object
+        ResultSet resultSet = null; // Result set object
+        String str = "";
+        try {
+        	// select from all columns
+            String readSQL = "SELECT * FROM EFFORT_LOGS " +
+                    "WHERE " +
+                    "PROJECT_NAME LIKE ? OR " +
+                    "START_TIME LIKE ? OR " +
+                    "END_TIME LIKE ? OR " +
+                    "LIFE_CYCLE_STEP LIKE ? OR " +
+                    "EFFORT_CATEGORY LIKE ? OR " +
+                    "DELIVERABLE LIKE ?";          
+            preparedStatement = connection.prepareStatement(readSQL);
+            for(int i = 1; i <= 6; i++) {
+            	// this is a wildcard, so it selects anything with this pattern
+                preparedStatement.setString(i, "%" + target + "%");
+            }
+            System.out.println("SQL Query: " + preparedStatement.toString());
+            resultSet = preparedStatement.executeQuery();
+            System.out.print(resultSet);
+            // print out result set
+            while (resultSet.next()) { 
+                str += "Project Name: " + resultSet.getString("PROJECT_NAME") + "\n";
+                str += "Start Time: " + resultSet.getTimestamp("START_TIME") + "\n";
+                str += "End Time: " + resultSet.getTimestamp("END_TIME") + "\n";
+                str += "Life Cycle Step: " + resultSet.getString("LIFE_CYCLE_STEP") + "\n";
+                str += "Effort Category: " + resultSet.getString("EFFORT_CATEGORY") + "\n";
+                str += "Deliverable: " + resultSet.getString("DELIVERABLE") + "\n";
+                str += "\n";
+            }
+        } catch (SQLException err) {
+            err.printStackTrace();
+        }
+        return str;
+    }
+
+    
     //the read method for the read operation
     public static String readEffortLog(){
         Connection connection = DatabaseConnection.getConnection(); //for getting the connection
