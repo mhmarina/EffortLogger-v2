@@ -15,11 +15,12 @@ import javafx.scene.layout.TilePane;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-
+//add role based thing
 public class AccountCreatorPane extends Application{
 	@Override
 	public void start(Stage primaryStage) {
 		try {
+			
 			BorderPane root = new BorderPane();
 			Scene scene = new Scene(root,0,0);
 			
@@ -30,7 +31,7 @@ public class AccountCreatorPane extends Application{
 			Text sceneTitle = new Text("Create Account");
 	        sceneTitle.setFont(Font.font("System", 20));
 			
-			Label label = new Label("Enter Password: ");
+			Label labelp = new Label("Enter Password: ");
 			PasswordField textField = new PasswordField();
 			textField.setMaxWidth(300);
 			TilePane r = new TilePane();
@@ -52,6 +53,10 @@ public class AccountCreatorPane extends Application{
 			TextField idField = new TextField();
 			idField.setMaxWidth(300);
 			
+			Label enterValidationKey = new Label("Enter Validation Key: ");
+			TextField validationKeyField = new TextField();
+			validationKeyField.setMaxWidth(300);
+			
 			ToggleButton showPassword = new ToggleButton("Show Password");
 			showPassword.setOnMousePressed(e -> {
 			    textField.setPromptText(textField.getText());
@@ -63,24 +68,32 @@ public class AccountCreatorPane extends Application{
 			    textField.setText(textField.getPromptText());
 			    textField.setPromptText("");
 			});
-			
-			
-			AccountCreator account = new AccountCreator();
-			account.initialize();
 	        
+			EventHandler<ActionEvent> checkPW = new EventHandler<ActionEvent>() {
+	            public void handle(ActionEvent e){
+	            		//perhaps add more password restrictions or attempt limitations?
+	            		String userKey = validationKeyField.getText();
+	            		String username = (firstnameField.getText()).toLowerCase() + (lastnameField.getText()).substring(0, Math.min(3, (lastnameField.getText()).length())).toLowerCase() + (idField.getText()).substring(Math.max(0, (idField.getText()).length()-3));
+	            		AccountCreator currAcc = new AccountCreator();
+	            		currAcc.initialize();
+	            		addAccStatus.setText(currAcc.addAccount(userKey,username,(textField.getText())));
+	            		//print account info?
+	            }
+	        };
+			
 	        EventHandler<ActionEvent> exit = new EventHandler<ActionEvent>() {
 	            public void handle(ActionEvent e)
 	            {
 	            	primaryStage.close();
 	            }
 	        };
-
 	        
+	        textField.setOnAction(checkPW); // when click check
+	           
 	        Button check = new Button("Submit");
-	        
 	        Button proceedToLogin = new Button("Login");
-
 	        proceedToLogin.setOnAction(exit);
+	        
 			
 			TilePane buttons = new TilePane(Orientation.HORIZONTAL);
 			buttons.getChildren().add(check);
@@ -88,7 +101,7 @@ public class AccountCreatorPane extends Application{
 			buttons.setAlignment(Pos.CENTER);
 			
 			TilePane passwordButtons = new TilePane(Orientation.HORIZONTAL);
-			passwordButtons.getChildren().add(label);
+			passwordButtons.getChildren().add(labelp);
 			passwordButtons.getChildren().add(textField);
 			passwordButtons.getChildren().add(showPassword);
 			passwordButtons.setAlignment(Pos.CENTER);
@@ -111,13 +124,19 @@ public class AccountCreatorPane extends Application{
 			idButtons.getChildren().add(space3);
 			idButtons.setAlignment(Pos.CENTER);
 			
+			TilePane validationKeyButtons = new TilePane(Orientation.HORIZONTAL);
+			validationKeyButtons.getChildren().add(enterValidationKey);
+			validationKeyButtons.getChildren().add(validationKeyField);
+			validationKeyButtons.getChildren().add(space4);
+			validationKeyButtons.setAlignment(Pos.CENTER);
+			
 			r.getChildren().add(sceneTitle);
 			r.getChildren().add(addAccStatus);
 			r.getChildren().add(firstnameButtons);
 			r.getChildren().add(lastnameButtons);
 			r.getChildren().add(idButtons);
+			r.getChildren().add(validationKeyButtons);
 			r.getChildren().add(passwordButtons);
-			r.getChildren().add(label);
 			r.getChildren().add(buttons);
 			
 			r.setHgap(10);
@@ -127,10 +146,10 @@ public class AccountCreatorPane extends Application{
 			 
 	        // set the scene
 			primaryStage.setScene(sc);
-			//show create an account stage
 			primaryStage.show();
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
 	}
+	
 }

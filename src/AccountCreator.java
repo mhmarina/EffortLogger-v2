@@ -5,38 +5,35 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
+//add role parameter in account creator
+
 
 public class AccountCreator {
-
 	private  ArrayList<Account> ListOfAccounts;//contains accounts
-	private boolean initialized ;
+	private boolean initialized;//keep track of whether account has been initialized
+	private static String AccessKey = "4su&yw5";//verification key for authorization
+
 	public AccountCreator() {
 		initialized = false;
 		ListOfAccounts = new ArrayList<Account>();
 	}
-	//subject to change: using record.csv file to store current account records
-	//takes the information from the csv and puts in the list of accounts
+	//subject to change: now using db instead of csv file
+	//takes the information from the db and puts in the list of accounts
 	public void initialize() {
-		ListOfAccounts.clear();
 		initialized = true;
-		try {
-		BufferedReader csvReader = new BufferedReader(new FileReader("../record.csv"));
-		String row = "";
-		while (( row = csvReader.readLine()) != null) {
-		    String[] data = row.split(",");
-		    ListOfAccounts.add(new Account(data[0],data[1]));
-		    
-		}
-		csvReader.close();
-		}
-		catch(IOException e) {
-			System.out.println("Error during initialization");
-		}
+		//try {
+			//initialize db
+		//}
+		//catch(IOException e) {
+			//System.out.println("INITIALIZATION ERROR");
+		//}
 	}
 	//checks if account already exists 
 	public boolean AccountPresent(Account check) {
 		
-		for(Account curr: ListOfAccounts) {
+		//for loop iterating thru accounts in db
+		//assume Account curr = i
+		for (Account curr : ListOfAccounts) {
 			if(curr.getPass().compareTo(check.getPass())==0 &&curr.getUsername().compareTo(check.getUsername())==0) {
 				return true;
 			}
@@ -44,9 +41,12 @@ public class AccountCreator {
 		return false;
 	}
 	//checks if account already exists with the same username
+	//no two accounts can have same username
 	public boolean usernamePresent(Account check) {
 		
-		for(Account curr: ListOfAccounts) {
+		//for loop iterating thru accounts in db as well
+		//assume Account curr = i
+		for (Account curr : ListOfAccounts) {
 			if(curr.getUsername().compareTo(check.getUsername())==0) {
 				return true;
 			}
@@ -54,52 +54,66 @@ public class AccountCreator {
 		return false;
 	}
 	
-	//adds an account to the csv and list of accounts
-	public String addAccount(/*String accessReq, */String username, String password) {
-		//checks if the Arraylist is upto date
+	//adds an account to the db and list of accounts
+	public String addAccount(String accessReq, String username, String password) {
+		//checks if the Arraylist is up to date
 		if(!initialized) {
 			initialize();
 		}
-		
-		Account currAcc = new Account(username,password);
-		//check if username already exists
-		if(!usernamePresent(currAcc)) {
-			ListOfAccounts.add(currAcc);//add current account to arraylist
+		//check authorization
+		if(accessReq.compareTo(AccessKey)==0) {
+			//encrypt username & password
+			String encryptedUse="";
 			try {
-				enterAccount(currAcc);
-			} catch (IOException e) {
+				encryptedUse = Encryptor.encrypt(username);
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			
+			String encryptedPass="";
+			try {
+				encryptedPass = Encryptor.encrypt(password);
+			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-				}
-			System.out.println("ACCOUNT CREATED SUCCESSFULLY");
-			return "Account " + username + " added";
 			}
-		
+			
+			Account currAcc = new Account(encryptedUse,encryptedPass);
+			//ensure no duplicate username
+			if(!usernamePresent(currAcc)) {
+				ListOfAccounts.add(currAcc);//add account to arraylist
+				try {
+					enterAccount(currAcc);//adds account to db w/ encrypted username+pw
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				System.out.println("ACCOUNT CREATED SUCCESSFULLY");
+				return "Account " + username + " added";
+				
+			}
 			else {
 				System.out.println("USERNAME ALREADY PRESENT");
 				return "Username use already present";
 			}
 			
 		}
+		else {
+			System.out.println("ACCESS DENIED");
+			return "Access denied, incorrect key";
+		}
+			
+	}
 
-	//adds current account to csv file prototype
+	//adds current account to db
 	public static void enterAccount(Account acc) throws IOException{
 	     
-	        File csvFile = new File("../record.csv");
-	        FileWriter fileWriter = new FileWriter(csvFile,true);
-	        String[] data = {acc.getUsername(),acc.getPass()};
-	        StringBuilder line = new StringBuilder();
-            for (int i = 0; i < data.length; i++) {
-                line.append(data[i].replaceAll("\"","\"\""));
-                if (i != data.length - 1) {
-                    line.append(',');
-                }
-            }
-            line.append("\n");
-            fileWriter.write(line.toString());
-            fileWriter.close();
+	        //add account to db
 
 	    }
+	
+//add print method? to print contents of db after account is created
 	
 	
 }	
@@ -136,4 +150,9 @@ public class AccountCreator {
 	    //perhaps add password restrictions on next use?
 	    System.out.printf("\nYour password has been set!");
 	}*/
+
+
+
+	
+
 
