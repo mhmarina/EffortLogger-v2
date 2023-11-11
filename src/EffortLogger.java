@@ -180,7 +180,7 @@ public class EffortLogger extends Application{
 		
 		//general username for all employees is team32
 		//general password for all employees is mssci
-		if (username.equals("team32")) {
+		if (username.equals("team38")) {
 			if(password.equals("mssci")) {
 				return true;
 			}
