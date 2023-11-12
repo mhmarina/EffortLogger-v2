@@ -1,21 +1,13 @@
 //class serves to create an account for a user
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
-//add role parameter in account creator
-
 
 public class AccountCreator {
-	private  ArrayList<Account> ListOfAccounts;//contains accounts
 	private boolean initialized;//keep track of whether account has been initialized
 	private static String AccessKey = "4su&yw5";//verification key for authorization
 
 	public AccountCreator() {
 		initialized = false;
-		ListOfAccounts = new ArrayList<Account>();
 	}
 	//subject to change: now using db instead of csv file
 	//takes the information from the db and puts in the list of accounts
@@ -29,29 +21,43 @@ public class AccountCreator {
 		//}
 	}
 	//checks if account already exists 
-	public boolean AccountPresent(Account check) {
+	public static boolean AccountAuthenticate(String username, String password) {
 		
-		//for loop iterating thru accounts in db
-		//assume Account curr = i
-		for (Account curr : ListOfAccounts) {
-			if(curr.getPass().compareTo(check.getPass())==0 &&curr.getUsername().compareTo(check.getUsername())==0) {
-				return true;
-			}
+		//encrypt username & password
+		String encryptedUsername="";
+		try {
+			encryptedUsername = Encryptor.encrypt(username);
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
 		}
-		return false;
+
+		String encryptedPassword="";
+		try {
+			encryptedPassword = Encryptor.encrypt(password);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		//calling the read method from UserAccountsTableOps class to check if the user account exists and 
+		if(UserAccountsTableOps.readUserAccount(encryptedUsername, encryptedPassword)){
+			return true;
+		}
+		else{
+			return false;
+		}
 	}
 	//checks if account already exists with the same username
 	//no two accounts can have same username
-	public boolean usernamePresent(Account check) {
+	public boolean usernamePresent(String username) {
 		
-		//for loop iterating thru accounts in db as well
-		//assume Account curr = i
-		for (Account curr : ListOfAccounts) {
-			if(curr.getUsername().compareTo(check.getUsername())==0) {
-				return true;
-			}
+		//calling the read method from UserAccountsTableOps class to check if the user account exists and 
+		if(UserAccountsTableOps.readUserAccount(username)){
+			return true;
 		}
-		return false;
+		else{
+			return false;
+		}
 	}
 	
 	//adds an account to the db and list of accounts
@@ -79,12 +85,10 @@ public class AccountCreator {
 				e.printStackTrace();
 			}
 			
-			Account currAcc = new Account(encryptedUse,encryptedPass);
 			//ensure no duplicate username
-			if(!usernamePresent(currAcc)) {
-				ListOfAccounts.add(currAcc);//add account to arraylist
+			if(!usernamePresent(username)) {
 				try {
-					enterAccount(currAcc);//adds account to db w/ encrypted username+pw
+					enterAccount(username, password);//adds account to db w/ encrypted username+pw
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -107,10 +111,10 @@ public class AccountCreator {
 	}
 
 	//adds current account to db
-	public static void enterAccount(Account acc) throws IOException{
+	public static void enterAccount(String username, String password) throws IOException{
 	     
-	        //add account to db
-
+	        //add account to database by calling the insert method from UserAccountsTableOps class
+			UserAccountsTableOps.insertUserAccount(username, password,"Employee");
 	    }
 	
 //add print method? to print contents of db after account is created

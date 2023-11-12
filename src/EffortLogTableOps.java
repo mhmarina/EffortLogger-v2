@@ -31,7 +31,7 @@ public class EffortLogTableOps {
         catch (SQLException e) { //catching the exception
             e.printStackTrace();
         }
-        finally{ //closing the prepared statement and connection
+        finally{ //closing the prepared statement
             try {
                 if(preparedStatement != null)
                     preparedStatement.close();
@@ -62,7 +62,6 @@ public class EffortLogTableOps {
             	// this is a wildcard, so it selects anything with this pattern
                 preparedStatement.setString(i, "%" + target + "%");
             }
-            System.out.println("SQL Query: " + preparedStatement.toString());
             resultSet = preparedStatement.executeQuery();
             System.out.print(resultSet);
             // print out result set
@@ -77,6 +76,15 @@ public class EffortLogTableOps {
             }
         } catch (SQLException err) {
             err.printStackTrace();
+        }
+        finally{ //closing the prepared statement
+            try {
+                if(preparedStatement != null)
+                    preparedStatement.close();
+            } 
+            catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
         return str;
     }
@@ -106,6 +114,15 @@ public class EffortLogTableOps {
         catch (SQLException err){
             err.printStackTrace();
         }
+        finally{ //closing the prepared statement
+            try {
+                if(preparedStatement != null)
+                    preparedStatement.close();
+            } 
+            catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
         return str;
     }
 
@@ -122,6 +139,15 @@ public class EffortLogTableOps {
         }
         catch (SQLException err){
             err.printStackTrace();
+        }
+        finally{ //closing the prepared statement
+            try {
+                if(preparedStatement != null)
+                    preparedStatement.close();
+            } 
+            catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
     }
 }
