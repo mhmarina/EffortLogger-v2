@@ -1,0 +1,13 @@
+{
+  "java.configuration.runtimes": [
+    {
+      "name": "JavaSE-17",
+      "path": "/Library/Java/JavaVirtualMachines/temurin-17.jdk/Contents/Home",
+      "default": true
+    }
+  ],
+  "java.project.referencedLibraries": [
+    "/Users/srivan/Documents/Fall 2023/CSE 360/Phase 5/EffortLogger-v2/lib/h2-2.2.224.jar",
+    "/Users/srivan/Downloads/javafx-sdk-17.0.9/lib/*.jar"
+  ]
+}

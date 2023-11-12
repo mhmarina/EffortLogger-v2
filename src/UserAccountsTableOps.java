@@ -113,6 +113,47 @@ public class UserAccountsTableOps {
         }
         return false;
     }
+
+    //the read method to read the role of the user
+    public static int readUserRole(String username){
+        Connection connection = DatabaseConnection.getConnection(); //for getting the connection
+        PreparedStatement preparedStatement = null; //prepared statement object
+        ResultSet resultSet = null; //result set object
+        try{
+            //find the user account with the given username
+            String readSQL = "SELECT * FROM USER_ACCOUNTS WHERE USERNAME = ?;";
+            preparedStatement = connection.prepareStatement(readSQL); //creating the prepared statement object
+            preparedStatement.setString(1, username);
+            resultSet = preparedStatement.executeQuery(); //executing the query
+            //if the result set is not empty, then the user account exists
+            if(resultSet.next()){
+                System.out.println("User account exists");
+                if(resultSet.getString("ROLE") == "Supervisor")
+                    return 1;
+                else
+                    return 0;
+            }
+            else{
+                System.out.println("User account does not exist");
+                return -1;
+            }
+        }
+        catch(SQLException e){ //catching the exception
+            e.printStackTrace();
+        }
+        finally{ //closing the result set and prepared statement
+            try{
+                if(resultSet != null)
+                    resultSet.close();
+                if(preparedStatement != null)
+                    preparedStatement.close();
+            }
+            catch(SQLException e){
+                e.printStackTrace();
+            }
+        }
+        return -1;
+    }
     //the delete method for the delete operation
     public static void deleteUserAccount(String username){
         Connection connection = DatabaseConnection.getConnection(); //for getting the connection
