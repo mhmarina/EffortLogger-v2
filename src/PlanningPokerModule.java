@@ -76,7 +76,7 @@ public class PlanningPokerModule extends VBox {
         String comments = commentsArea.getText();
 
         // Logic to store these details in the database
-        // For example: DatabaseConnection.getInstance().saveVote(selectedOption, comments);
+        PlanningPokerTableOps.insertPlanningPokerData(selectedOption, comments); // insertPlanningPokerData is a method in PlanningPokerTableOps.java
 
         // Clearing the fields after submission
         votingOptions.getSelectionModel().clearSelection();
@@ -93,16 +93,9 @@ public class PlanningPokerModule extends VBox {
 
     private void handleLoadHistory(ActionEvent event) {
         // Fetch historical data and update the historyListView
-        List<String> historyData = fetchHistoryData(); // Implement this method
+        String historyData = PlanningPokerTableOps.readPlanningPokerData(); // readPlanningPokerData is a method in PlanningPokerTableOps.java
         ObservableList<String> items = FXCollections.observableArrayList(historyData);
         historyListView.setItems(items);
     }
 
-    private List<String> fetchHistoryData() {
-        // Placeholder data for demonstration
-        // Replace this with actual database fetching logic
-        List<String> demoHistory = new ArrayList<>();
-        
-        return demoHistory;
-    }
 }

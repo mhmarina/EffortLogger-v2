@@ -58,12 +58,12 @@ public class EffortLogger extends Application{
 	@Override
 	public void start(Stage primaryStage) throws Exception {
     
-		// TODO Auto-generated method stub
 		//Establishing a connection to the database
 		DatabaseConnection.getConnection();
 		//creating a table in the database
 		DB_TableCreation.createTableEffortLog();
 		DB_TableCreation.createTableUserAccounts();
+		DB_TableCreation.createTablePlanningPoker();
 		// Create a StackPane as the root node
         root = new StackPane();
         // Create a Scene
