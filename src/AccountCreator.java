@@ -28,7 +28,6 @@ public class AccountCreator {
 		try {
 			encryptedUsername = Encryptor.encrypt(username);
 		} catch (Exception e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 
@@ -36,7 +35,6 @@ public class AccountCreator {
 		try {
 			encryptedPassword = Encryptor.encrypt(password);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		//calling the read method from UserAccountsTableOps class to check if the user account exists and 
@@ -73,7 +71,6 @@ public class AccountCreator {
 			try {
 				encryptedUse = Encryptor.encrypt(username);
 			} catch (Exception e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 			
@@ -81,7 +78,6 @@ public class AccountCreator {
 			try {
 				encryptedPass = Encryptor.encrypt(password);
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			

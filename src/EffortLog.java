@@ -21,17 +21,20 @@ public class EffortLog {
 		this.lifeCycleStep = lc;
 		this.effortCategory = ec;
 		this.deliverable = d;
+		//replace the starting words for a new string to parse it to TimeStamp
 		String startT = s.replace("Start Time: ", "");
 		String endT = st.replace("Stop Time: ", "");	
+		//specifying what time format is being used to parse
 		SimpleDateFormat dFormat = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy");
 		Timestamp startTimeStamp = null;
 		Timestamp stopTimeStamp = null;
-		try {
+		try { //try parsing the string to TimeStamp
 			startTimeStamp = new Timestamp(dFormat.parse(startT).getTime());
 			stopTimeStamp = new Timestamp(dFormat.parse(endT).getTime());
-		} catch (ParseException err) {
+		} catch (ParseException err) { //catch exceptions
 			err.printStackTrace();
 		}
+		//insert the new entry to the database
 		EffortLogTableOps.insertEffortLog(this.projectName, startTimeStamp, stopTimeStamp, this.lifeCycleStep, this.effortCategory, this.deliverable);
 	}
 	

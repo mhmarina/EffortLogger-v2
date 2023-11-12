@@ -1,20 +1,36 @@
 import java.util.ArrayList;
 
+import org.h2.engine.User;
+
 import javafx.application.Application;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.control.TextField;
 import javafx.scene.control.TabPane.TabClosingPolicy;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class EffortLogger extends Application{
+	
 	public static void main(String [] args) {
 		launch(args);
 	}
 	
-	public ArrayList<EffortLog> effortLogs; // placeholder for database
+	public ArrayList<EffortLog> effortLogs;
 	private StackPane root;
 	private Scene scene;
 	private Tab mainTab;
@@ -23,23 +39,32 @@ public class EffortLogger extends Application{
 	private Tab planningPoker;
 	private Tab logs;
 	private TabPane tabPane;
+	
+	/***variables for login***/
+	private GridPane grid;
+	private Text title;
+	private Label userLabel;
+	private TextField userTextField;
+	private Label passwordLabel;
+	private PasswordField passwordField;
+	private Button loginButton;
+	private Button createNewAccount;
+	private Scene scene_login;
+	private boolean happen = false;
+	private String username;
+	private String password;
+	/***end of variables for login***/
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-<<<<<<< HEAD
-		// TODO Auto-generated method stub
-=======
     
-		// TODO Auto-generated method stub
 		//Establishing a connection to the database
 		DatabaseConnection.getConnection();
 		//creating a table in the database
 		DB_TableCreation.createTableEffortLog();
 		DB_TableCreation.createTableUserAccounts();
->>>>>>> parent of be13574 (The finished Database_Prototype)
+		DB_TableCreation.createTablePlanningPoker();
 		// Create a StackPane as the root node
-		DatabaseConnection.getConnection();
-		DB_TableCreation.createTable();
         root = new StackPane();
         // Create a Scene
         scene = new Scene(root, 800, 600);
@@ -51,33 +76,10 @@ public class EffortLogger extends Application{
         primaryStage.show();
         
         effortLogs = new ArrayList<>();
+			
+	/***login portion***/	
+		 primaryStage.setTitle("Login");
 
-
-        // create different tabs/ consoles in EffortLogger
-        mainTab = new Tab(); // this tab will contain the clock function
-        mainTab.setText("Main Console");
-        MainConsolePane mainPane = new MainConsolePane(effortLogs);
-        mainTab.setContent(mainPane);
-        
-        editor = new Tab();
-        editor.setText("Editor");
-        
-        defects = new Tab();
-        defects.setText("Defect Console");
-        
-        planningPoker = new Tab();
-        planningPoker.setText("Planning Poker");
-        
-        logs = new Tab();
-        logs.setText("Logs");
-        Logs logsPane = new Logs(effortLogs);
-        logs.setContent(logsPane);
-        
-        tabPane = new TabPane();
-        tabPane.getTabs().addAll(mainTab, logs, planningPoker);
-        tabPane.setTabClosingPolicy(TabClosingPolicy.UNAVAILABLE);
-        root.getChildren().add(tabPane);
-        
 	     grid = new GridPane();
 	     grid.setAlignment(Pos.CENTER);
 	     grid.setHgap(10);
@@ -110,7 +112,7 @@ public class EffortLogger extends Application{
 	            String username = userTextField.getText();
 	            String password = passwordField.getText();
 
-	            if (isValid(username, password)) {
+	            if (AccountCreator.AccountAuthenticate(username, password)) {
 	                Alert alert = new Alert(Alert.AlertType.INFORMATION);
 	                alert.setTitle("Success");
 	                alert.setHeaderText(null);
@@ -118,12 +120,11 @@ public class EffortLogger extends Application{
 	                alert.showAndWait();
 	            
 	/***redirect to main console***/
-	                
 		        	root = new StackPane();
 			        // Create a Scene
 			        scene = new Scene(root, 800, 600);
-			        String css = this.getClass().getResource("application.css").toExternalForm();
-			        scene.getStylesheets().add(css);
+			        String cse = this.getClass().getResource("application.css").toExternalForm();
+			        scene.getStylesheets().add(cse);
 			        // Set the scene for the stage
 			        primaryStage.setScene(scene);
 			        primaryStage.setTitle("EffortLogger 2.0");
@@ -144,6 +145,8 @@ public class EffortLogger extends Application{
 			        
 			        planningPoker = new Tab();
 			        planningPoker.setText("Planning Poker");
+			        PlanningPokerModule pPoker = new PlanningPokerModule();
+			        planningPoker.setContent(pPoker);
 			        
 			        logs = new Tab();
 			        logs.setText("Logs");
@@ -174,19 +177,5 @@ public class EffortLogger extends Application{
 	        primaryStage.setScene(scene_login);
 	        primaryStage.show();		
 		
-	}
-	
-	private boolean isValid(String username, String password) {
-		
-		//general username for all employees is team32
-		//general password for all employees is mssci
-		if (username.equals("team32")) {
-			if(password.equals("mssci")) {
-				return true;
-			}
-		}
-		return false;
-		
->>>>>>> Stashed changes
 	}
 }
