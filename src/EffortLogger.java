@@ -1,5 +1,7 @@
 import java.util.ArrayList;
 
+import org.h2.engine.User;
+
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -56,11 +58,12 @@ public class EffortLogger extends Application{
 	@Override
 	public void start(Stage primaryStage) throws Exception {
     
-		// TODO Auto-generated method stub
 		//Establishing a connection to the database
 		DatabaseConnection.getConnection();
 		//creating a table in the database
-		DB_TableCreation.createTable();
+		DB_TableCreation.createTableEffortLog();
+		DB_TableCreation.createTableUserAccounts();
+		DB_TableCreation.createTablePlanningPoker();
 		// Create a StackPane as the root node
         root = new StackPane();
         // Create a Scene
@@ -109,7 +112,7 @@ public class EffortLogger extends Application{
 	            String username = userTextField.getText();
 	            String password = passwordField.getText();
 
-	            if (isValid(username, password)) {
+	            if (AccountCreator.AccountAuthenticate(username, password)) {
 	                Alert alert = new Alert(Alert.AlertType.INFORMATION);
 	                alert.setTitle("Success");
 	                alert.setHeaderText(null);
@@ -173,19 +176,6 @@ public class EffortLogger extends Application{
 	        Scene scene_login = new Scene(grid, 300, 275);
 	        primaryStage.setScene(scene_login);
 	        primaryStage.show();		
-		
-	}
-	
-	private boolean isValid(String username, String password) {
-		
-		//general username for all employees is team32
-		//general password for all employees is mssci
-		if (username.equals("team38")) {
-			if(password.equals("mssci")) {
-				return true;
-			}
-		}
-		return false;
 		
 	}
 }

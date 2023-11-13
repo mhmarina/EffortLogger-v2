@@ -12,7 +12,7 @@ import java.sql.SQLException;
 public class DatabaseConnection {
     
     // creating the JDBC URL, username and password for the database
-    private static final String JDBC_URL = "jdbc:h2:~/EffortLoggerDB"; //creates a database in the user's home directory
+    private static final String JDBC_URL = "jdbc:h2:./EffortLoggerDB"; //creates a database in the user's home directory
     private static final String JDBC_USERNAME = "sa"; //default usernam(system administrator)
     private static final String JDBC_PASSWORD = "12345678"; //a password to ensure additional database security
 

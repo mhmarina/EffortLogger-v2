@@ -1,58 +1,101 @@
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
-import javafx.geometry.Insets;
-import javafx.scene.layout.BorderPane;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+
+import java.util.List;
+import java.util.ArrayList; // For demo purposes
 
 public class PlanningPokerModule extends VBox {
-    private TextArea historicalDataTextArea;
-    private ComboBox<String> estimationComboBox;
-    private TextArea notesTextArea;
+    private ComboBox<String> scaleSelector;
+    private ComboBox<String> votingOptions;
+    private TextArea commentsArea;
+    private Button submitButton;
+    private ListView<String> historyListView; // For displaying historical data
+    private Button loadHistoryButton;        // Button to load history
+
+    private ObservableList<String> fibonacciOptions = FXCollections.observableArrayList("0", "1", "2", "3", "5", "8", "13", "21");
+    private ObservableList<String> tshirtOptions = FXCollections.observableArrayList("XS", "S", "M", "L", "XL");
+    private ObservableList<String> sequentialOptions = FXCollections.observableArrayList("1", "2", "3", "4", "5", "6", "7", "8", "9", "10");
+    private ObservableList<String> cardOptions = FXCollections.observableArrayList("Ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King");
 
     public PlanningPokerModule() {
-        // Create the user-friendly interface components
-        Label estimationLabel = new Label("Estimation:");
-        estimationComboBox = new ComboBox<>();
-        estimationComboBox.getItems().addAll("1", "2", "3", "5", "8", "13", "20", "40", "100");
-        estimationComboBox.setPromptText("Select an estimation");
-
-        Label notesLabel = new Label("Notes:");
-        notesTextArea = new TextArea();
-
-        Button submitButton = new Button("Submit");
-        submitButton.setOnAction(event -> handleSubmission());
-
-        getChildren().addAll(estimationLabel, estimationComboBox, notesLabel, notesTextArea, submitButton);
-
-        // Create historical data display (you can use the TextArea for this)
-        historicalDataTextArea = new TextArea();
-        historicalDataTextArea.setEditable(false);
-        historicalDataTextArea.setWrapText(true);
-        historicalDataTextArea.setPrefHeight(150);
-
-        // Add the historicalDataTextArea to the layout
-        getChildren().add(historicalDataTextArea);
-
-        // Set up the layout
-        setSpacing(10);
-        setPadding(new Insets(10));
+        initializeComponents();
     }
 
-    private void handleSubmission() {
-        String selectedEstimation = estimationComboBox.getValue();
-        String notes = notesTextArea.getText();
-        // Handle the estimation and notes
-        // You can store this information and add it to historical data
+    private void initializeComponents() {
+        scaleSelector = new ComboBox<>();
+        scaleSelector.getItems().addAll("Fibonacci", "T-Shirt", "Sequential", "Cards");
+        scaleSelector.setValue("Fibonacci"); // Default scale
 
-        // Append the new data to the historical data TextArea
-        String historicalData = historicalDataTextArea.getText();
-        historicalData += "Estimation: " + selectedEstimation + "\nNotes: " + notes + "\n\n";
-        historicalDataTextArea.setText(historicalData);
+        votingOptions = new ComboBox<>();
+        votingOptions.setItems(fibonacciOptions); // Default to Fibonacci options
 
-        // Clear the input fields
-        estimationComboBox.setValue(null);
-        notesTextArea.clear();
+        commentsArea = new TextArea();
+        commentsArea.setPromptText("Enter your comments here");
+
+        submitButton = new Button("Submit");
+        submitButton.setOnAction(this::handleSubmit);
+
+        scaleSelector.setOnAction(event -> updateVotingOptions());
+
+        // Initialize history ListView
+        historyListView = new ListView<>();
+        historyListView.setPrefHeight(200); // Set preferred height
+
+        // Initialize Load History Button
+        loadHistoryButton = new Button("Load History");
+        loadHistoryButton.setOnAction(this::handleLoadHistory);
+
+        this.getChildren().addAll(scaleSelector, votingOptions, commentsArea, submitButton, loadHistoryButton, historyListView);
     }
+
+    private void updateVotingOptions() {
+        String selectedScale = scaleSelector.getValue();
+        switch (selectedScale) {
+            case "Fibonacci":
+                votingOptions.setItems(fibonacciOptions);
+                break;
+            case "T-Shirt":
+                votingOptions.setItems(tshirtOptions);
+                break;
+            case "Sequential":
+                votingOptions.setItems(sequentialOptions);
+                break;
+            case "Cards":
+                votingOptions.setItems(cardOptions);
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void handleSubmit(ActionEvent event) {
+        String selectedOption = votingOptions.getValue();
+        String comments = commentsArea.getText();
+
+        // Logic to store these details in the database
+        PlanningPokerTableOps.insertPlanningPokerData(selectedOption, comments); // insertPlanningPokerData is a method in PlanningPokerTableOps.java
+
+        // Clearing the fields after submission
+        votingOptions.getSelectionModel().clearSelection();
+        commentsArea.clear();
+
+        // Show confirmation dialog
+        Alert confirmationAlert = new Alert(Alert.AlertType.INFORMATION);
+        confirmationAlert.setTitle("Submission Confirmed");
+        confirmationAlert.setHeaderText("Vote Submitted");
+        String content = String.format("You voted: %s\nComments: %s", selectedOption, comments);
+        confirmationAlert.setContentText(content);
+        confirmationAlert.showAndWait();
+    }
+
+    private void handleLoadHistory(ActionEvent event) {
+        // Fetch historical data and update the historyListView
+        String historyData = PlanningPokerTableOps.readPlanningPokerData(); // readPlanningPokerData is a method in PlanningPokerTableOps.java
+        ObservableList<String> items = FXCollections.observableArrayList(historyData);
+        historyListView.setItems(items);
+    }
+
 }
