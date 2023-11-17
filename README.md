@@ -17,3 +17,7 @@ in order for the project to compile and run.
 
 Following these tasks will make the project be able to run on your local system.
 
+Once running, the application currently authorizes a test user with the following credentials:
+username: team38
+password: mssci
+
