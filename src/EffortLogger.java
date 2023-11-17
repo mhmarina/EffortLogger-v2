@@ -78,48 +78,48 @@ public class EffortLogger extends Application{
         effortLogs = new ArrayList<>();
 			
 	/***login portion***/	
-		 primaryStage.setTitle("Login");
-
-	     grid = new GridPane();
-	     grid.setAlignment(Pos.CENTER);
-	     grid.setHgap(10);
-	     grid.setVgap(10);
-	     grid.setPadding(new Insets(25, 25, 25, 25));
-
-	     title = new Text("Please Login");
-	     title.setFont(Font.font("System", 20));
-	     grid.add(title, 0, 0, 2, 1);
-
-	     userLabel = new Label("Username:");
-	     grid.add(userLabel, 0, 1);
-
-	     userTextField = new TextField();
-	     grid.add(userTextField, 1, 1);
-
-	     passwordLabel = new Label("Password:");
-	     grid.add(passwordLabel, 0, 2);
-
-	     passwordField = new PasswordField();
-	     grid.add(passwordField, 1, 2);
-
-	     loginButton = new Button("Login");
-	     grid.add(loginButton, 1, 3);
-	        
-	     createNewAccount = new Button("Create Account");
-	     grid.add(createNewAccount, 1, 4);
-
-	        loginButton.setOnAction(event -> {
-	            String username = userTextField.getText();
-	            String password = passwordField.getText();
-
-	            if (AccountCreator.AccountAuthenticate(username, password)) {
-	                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-	                alert.setTitle("Success");
-	                alert.setHeaderText(null);
-	                alert.setContentText("You've successfully logged in!");
-	                alert.showAndWait();
-	            
-	/***redirect to main console***/
+//		 primaryStage.setTitle("Login");
+//
+//	     grid = new GridPane();
+//	     grid.setAlignment(Pos.CENTER);
+//	     grid.setHgap(10);
+//	     grid.setVgap(10);
+//	     grid.setPadding(new Insets(25, 25, 25, 25));
+//
+//	     title = new Text("Please Login");
+//	     title.setFont(Font.font("System", 20));
+//	     grid.add(title, 0, 0, 2, 1);
+//
+//	     userLabel = new Label("Username:");
+//	     grid.add(userLabel, 0, 1);
+//
+//	     userTextField = new TextField();
+//	     grid.add(userTextField, 1, 1);
+//
+//	     passwordLabel = new Label("Password:");
+//	     grid.add(passwordLabel, 0, 2);
+//
+//	     passwordField = new PasswordField();
+//	     grid.add(passwordField, 1, 2);
+//
+//	     loginButton = new Button("Login");
+//	     grid.add(loginButton, 1, 3);
+//	        
+//	     createNewAccount = new Button("Create Account");
+//	     grid.add(createNewAccount, 1, 4);
+//
+//	        loginButton.setOnAction(event -> {
+//	            String username = userTextField.getText();
+//	            String password = passwordField.getText();
+//
+//	            if (AccountCreator.AccountAuthenticate(username, password)) {
+//	                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+//	                alert.setTitle("Success");
+//	                alert.setHeaderText(null);
+//	                alert.setContentText("You've successfully logged in!");
+//	                alert.showAndWait();
+//	            
+//	/***redirect to main console***/
 		        	root = new StackPane();
 			        // Create a Scene
 			        scene = new Scene(root, 800, 600);
@@ -157,25 +157,25 @@ public class EffortLogger extends Application{
 			        tabPane.getTabs().addAll(mainTab, logs, planningPoker);
 			        tabPane.setTabClosingPolicy(TabClosingPolicy.UNAVAILABLE);
 			        root.getChildren().add(tabPane);
-	 /***end of redirect to main console***/
-	        		
-	            } else {
-	                Alert alert = new Alert(Alert.AlertType.ERROR);
-	                alert.setTitle("Invalid Credentials");
-	                alert.setHeaderText(null);
-	                alert.setContentText("Your username and password do not match.");
-	                alert.showAndWait();
-	            }
-	        });
-	        
-	        createNewAccount.setOnAction(event -> { // open new window to create an account
-	        	AccountCreatorPane createAccount = new AccountCreatorPane();
-	            createAccount.start(new Stage());
-	        });
-	        
-	        Scene scene_login = new Scene(grid, 300, 275);
-	        primaryStage.setScene(scene_login);
+//	 /***end of redirect to main console***/
+//	        		
+//	            } else {
+//	                Alert alert = new Alert(Alert.AlertType.ERROR);
+//	                alert.setTitle("Invalid Credentials");
+//	                alert.setHeaderText(null);
+//	                alert.setContentText("Your username and password do not match.");
+//	                alert.showAndWait();
+//	            }
+//	        });
+//	        
+//	        createNewAccount.setOnAction(event -> { // open new window to create an account
+//	        	AccountCreatorPane createAccount = new AccountCreatorPane();
+//	            createAccount.start(new Stage());
+//	        });
+//	        
+//	        Scene scene_login = new Scene(grid, 300, 275);
+//	        primaryStage.setScene(scene_login);
 	        primaryStage.show();		
-		
+//		
 	}
 }

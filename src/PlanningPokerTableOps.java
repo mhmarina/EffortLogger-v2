@@ -5,6 +5,7 @@
  //importing the required packages
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
@@ -15,6 +16,7 @@ public class PlanningPokerTableOps {
         Connection connection = DatabaseConnection.getConnection(); //for getting the connection
         PreparedStatement preparedStatement = null; //prepared statement object
         try{
+        	// also insert project name 
             String insertSQL = "INSERT INTO PLANNING_POKER (EFFORT_ESTIMATE, INFO) VALUES (?, ?);"; //the insert query
             preparedStatement = connection.prepareStatement(insertSQL); //preparing the statement))
             preparedStatement.setString(1, effortEstimate);
@@ -37,6 +39,31 @@ public class PlanningPokerTableOps {
         }
     }
 
+	public static ArrayList<Integer> readPlanningPokerPoints() {
+		ArrayList<Integer> points = new ArrayList<Integer>();
+        Connection connection = DatabaseConnection.getConnection(); //for getting the connection
+        PreparedStatement preparedStatement = null; //prepared statement object
+        ResultSet resultSet = null; //result set object
+        String str = "";
+        try{
+            String readSQL = "SELECT EFFORT_ESTIMATE FROM PLANNING_POKER;"; //the read query
+            preparedStatement = connection.prepareStatement(readSQL); //preparing the statement
+            resultSet = preparedStatement.executeQuery(); //executing the query
+            while(resultSet.next()){ //while loop to iterate through the result set
+            	try {
+                points.add(Integer.parseInt(resultSet.getString("EFFORT_ESTIMATE")));
+            	}
+            	catch (NumberFormatException e) {
+                    System.err.println("Invalid integer: " + resultSet.getString("EFFORT_ESTIMATE"));
+            	}
+            }            
+        }
+        catch(SQLException e){ //catching the exception
+            e.printStackTrace();
+        }
+        return points;
+	}
+    
     //the read method for the read operation to display the planning poker data
     public static String readPlanningPokerData(){
         Connection connection = DatabaseConnection.getConnection(); //for getting the connection
