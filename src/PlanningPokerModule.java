@@ -91,6 +91,7 @@ public class PlanningPokerModule extends VBox {
 				//print error message: must generate or input average
 			}
 			// insert into backlog database
+			// clear current planning poker (session) database
 		}	
     }
     
