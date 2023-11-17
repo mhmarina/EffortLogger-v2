@@ -95,9 +95,9 @@ public class PlanningPokerModule extends VBox {
     }
     
     private class handleGenerate implements EventHandler<ActionEvent>{
-		ArrayList<Integer> points = PlanningPokerTableOps.readPlanningPokerPoints();
 		@Override
 		public void handle(ActionEvent arg0) {
+			ArrayList<Integer> points = PlanningPokerTableOps.readPlanningPokerPoints();
 			int sum = 0;
 			int average = 0;
 			System.out.println("initial sum " + sum);
