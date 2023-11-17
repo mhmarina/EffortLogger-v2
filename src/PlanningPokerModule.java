@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.ArrayList; // For demo purposes
 
 public class PlanningPokerModule extends VBox {
-	int average = 0;
     private ComboBox<String> scaleSelector;
     private ComboBox<String> votingOptions;
     private TextArea commentsArea;
@@ -88,7 +87,7 @@ public class PlanningPokerModule extends VBox {
 		public void handle(ActionEvent arg0) {
 			String projectName = projectNameField.getText();
 			int storyPoints = Integer.parseInt(generatedEstimate.getText());
-			if(average == 0) {
+			if(storyPoints == 0) {
 				//print error message: must generate or input average
 			}
 			// insert into backlog database
@@ -97,10 +96,14 @@ public class PlanningPokerModule extends VBox {
     
     private class handleGenerate implements EventHandler<ActionEvent>{
 		ArrayList<Integer> points = PlanningPokerTableOps.readPlanningPokerPoints();
-		int sum = 0;
 		@Override
 		public void handle(ActionEvent arg0) {
+			int sum = 0;
+			int average = 0;
+			System.out.println("initial sum " + sum);
 			for(int i = 0; i < points.size(); i++) {
+				System.out.println(points.get(i));
+				System.out.print(", current sum: " + sum + "\n");
 				sum = sum + points.get(i);
 			}
 			average = sum / points.size();
