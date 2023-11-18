@@ -62,7 +62,7 @@ public class MainConsolePane extends VBox {
         timeLabel.setFont(header);
         
         // options for comboboxes
-        projectList = new ArrayList<>();
+        projectList = ProjectsBacklogTableOps.readProjectNames();
         projectList.add("Business Project");
         projectList.add("Development Project");
         lifeCycleList = new String[]{"Planning", "Information Gathering", "Information Understanding",

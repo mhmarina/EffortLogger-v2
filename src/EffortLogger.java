@@ -64,6 +64,7 @@ public class EffortLogger extends Application{
 		DB_TableCreation.createTableEffortLog();
 		DB_TableCreation.createTableUserAccounts();
 		DB_TableCreation.createTablePlanningPoker();
+		DB_TableCreation.createTableProjectsBacklog();
 		// Create a StackPane as the root node
         root = new StackPane();
         // Create a Scene

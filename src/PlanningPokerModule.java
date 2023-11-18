@@ -88,10 +88,18 @@ public class PlanningPokerModule extends VBox {
 			String projectName = projectNameField.getText();
 			int storyPoints = Integer.parseInt(generatedEstimate.getText());
 			if(storyPoints == 0) {
-				//print error message: must generate or input average
+				System.out.println("error: Must generate or input estimate > 0.");
 			}
-			// insert into backlog database
-			// clear current planning poker (session) database
+			if(projectName == "") {
+				System.out.println("error: Project name is blank.");
+			}
+			else {
+				ProjectsBacklogTableOps.insertProjectToBacklog(projectName, storyPoints);
+				historyListView.getItems().clear();
+				generatedEstimate.setText("0");
+				PlanningPokerTableOps.clearPlanningPokerTable();
+				System.out.println(ProjectsBacklogTableOps.readProjectsBacklog());
+			}
 		}	
     }
     
@@ -138,6 +146,12 @@ public class PlanningPokerModule extends VBox {
         String projectName = projectNameField.getText();
         System.out.print(projectName);
         // Logic to store these details in the database
+        // if entry is invalid (null info)
+        if(selectedOption == null || projectName == null) {
+        	System.out.println("Please input roject name and story points");
+        }
+        
+        else {
         PlanningPokerTableOps.insertPlanningPokerData(selectedOption, comments); // insertPlanningPokerData is a method in PlanningPokerTableOps.java
 
         // Clearing the fields after submission
@@ -151,6 +165,7 @@ public class PlanningPokerModule extends VBox {
         String content = String.format("You voted: %s\nComments: %s", selectedOption, comments);
         confirmationAlert.setContentText(content);
         confirmationAlert.showAndWait();
+        }
     }
 
     private void handleLoadHistory(ActionEvent event) {
