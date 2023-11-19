@@ -86,19 +86,26 @@ public class PlanningPokerModule extends VBox {
 		@Override
 		public void handle(ActionEvent arg0) {
 			String projectName = projectNameField.getText();
-			int storyPoints = Integer.parseInt(generatedEstimate.getText());
-			if(storyPoints == 0) {
-				System.out.println("error: Must generate or input estimate > 0.");
+			try {
+				int storyPoints = Integer.parseInt(generatedEstimate.getText());
+				if(storyPoints == 0 || generatedEstimate.getText() == null) {
+					System.out.println("error: Must generate or input estimate > 0.");
+					return;
+				}
+				if(projectName.isEmpty()) {
+					System.out.println("error: Project name is blank.");
+					return;
+				}
+				else {
+					ProjectsBacklogTableOps.insertProjectToBacklog(projectName, storyPoints);
+					historyListView.getItems().clear();
+					generatedEstimate.setText("0");
+					PlanningPokerTableOps.clearPlanningPokerTable();
+					System.out.println(ProjectsBacklogTableOps.readProjectsBacklog());
+				}
 			}
-			if(projectName == "") {
-				System.out.println("error: Project name is blank.");
-			}
-			else {
-				ProjectsBacklogTableOps.insertProjectToBacklog(projectName, storyPoints);
-				historyListView.getItems().clear();
-				generatedEstimate.setText("0");
-				PlanningPokerTableOps.clearPlanningPokerTable();
-				System.out.println(ProjectsBacklogTableOps.readProjectsBacklog());
+			catch(NumberFormatException e) {
+				System.out.println("Error: Incorrect number format.");
 			}
 		}	
     }
@@ -110,6 +117,10 @@ public class PlanningPokerModule extends VBox {
 			int sum = 0;
 			int average = 0;
 			System.out.println("initial sum " + sum);
+			if(points.size() == 0) {
+				System.out.println("Error: Divide by zero (no valid entries).");
+				return;
+			}
 			for(int i = 0; i < points.size(); i++) {
 				System.out.println(points.get(i));
 				System.out.print(", current sum: " + sum + "\n");
