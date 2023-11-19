@@ -116,4 +116,35 @@ public class DB_TableCreation {
             }
         }
     }
+    
+    public static void createTableProjectsBacklog(){
+
+        //creating connection object
+        Connection connection = DatabaseConnection.getConnection();
+        Statement statement = null; //creating statement object
+
+        try{
+            statement = connection.createStatement(); //initializing statement object
+            // making the CREATE command to create the tables in the database
+            String createTableSQL = "CREATE TABLE IF NOT EXISTS PROJECTS_BACKLOG (" +
+                                    "ID INT PRIMARY KEY AUTO_INCREMENT, " +
+                                    "PROJECT_NAME VARCHAR(255), " +
+                                    "STORY_POINTS INT);";
+            statement.executeUpdate(createTableSQL); //executing the CREATE command
+            System.out.println("Projects Backlog table created successfully");
+        }
+        catch(SQLException err){ //catching any SQL exception
+            err.printStackTrace();
+        }
+        finally{ //closing the statement object
+            try{
+                if(statement != null){ 
+                    statement.close();//closing the statement object
+                }
+            }
+            catch(SQLException err){//catching any SQL exception
+                err.printStackTrace();
+            }
+        }
+    }
 }

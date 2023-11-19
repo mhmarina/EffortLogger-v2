@@ -62,7 +62,7 @@ public class MainConsolePane extends VBox {
         timeLabel.setFont(header);
         
         // options for comboboxes
-        projectList = new ArrayList<>();
+        projectList = ProjectsBacklogTableOps.readProjectNames();
         projectList.add("Business Project");
         projectList.add("Development Project");
         lifeCycleList = new String[]{"Planning", "Information Gathering", "Information Understanding",
@@ -76,7 +76,6 @@ public class MainConsolePane extends VBox {
         projectCB.setValue("Project Name");
         projectCB.getItems().addAll(projectList);
         projectCB.setOnAction(new PCBHandler());
-        projectCB.setEditable(true);
         
         lifeCyclesCB = new ComboBox();
         lifeCyclesCB.getItems().addAll(lifeCycleList);
@@ -224,5 +223,9 @@ public class MainConsolePane extends VBox {
         int h = sec / 3600;
     	
     	return String.format("%d hours %d minutes %d seconds", h, m, s);
+    }
+
+    public ComboBox<String> getProjectCB() {
+    	return projectCB;
     }
 }

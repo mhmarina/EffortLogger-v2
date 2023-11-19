@@ -64,6 +64,7 @@ public class EffortLogger extends Application{
 		DB_TableCreation.createTableEffortLog();
 		DB_TableCreation.createTableUserAccounts();
 		DB_TableCreation.createTablePlanningPoker();
+		DB_TableCreation.createTableProjectsBacklog();
 		// Create a StackPane as the root node
         root = new StackPane();
         // Create a Scene
@@ -119,7 +120,7 @@ public class EffortLogger extends Application{
 	                alert.setContentText("You've successfully logged in!");
 	                alert.showAndWait();
 	            
-	/***redirect to main console***/
+//	/***redirect to main console***/
 		        	root = new StackPane();
 			        // Create a Scene
 			        scene = new Scene(root, 800, 600);
@@ -145,7 +146,7 @@ public class EffortLogger extends Application{
 			        
 			        planningPoker = new Tab();
 			        planningPoker.setText("Planning Poker");
-			        PlanningPokerModule pPoker = new PlanningPokerModule();
+			        PlanningPokerModule pPoker = new PlanningPokerModule(mainPane.getProjectCB());
 			        planningPoker.setContent(pPoker);
 			        
 			        logs = new Tab();
@@ -157,7 +158,7 @@ public class EffortLogger extends Application{
 			        tabPane.getTabs().addAll(mainTab, logs, planningPoker);
 			        tabPane.setTabClosingPolicy(TabClosingPolicy.UNAVAILABLE);
 			        root.getChildren().add(tabPane);
-	 /***end of redirect to main console***/
+//	 /***end of redirect to main console***/
 	        		
 	            } else {
 	                Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -176,6 +177,6 @@ public class EffortLogger extends Application{
 	        Scene scene_login = new Scene(grid, 300, 275);
 	        primaryStage.setScene(scene_login);
 	        primaryStage.show();		
-		
+//		
 	}
 }
