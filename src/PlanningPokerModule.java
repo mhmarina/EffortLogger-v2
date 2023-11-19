@@ -25,7 +25,6 @@ public class PlanningPokerModule extends VBox {
     private ListView<String> historyListView; // For displaying historical data
     private Button loadHistoryButton;        // Button to load history
     private ObservableList<String> fibonacciOptions = FXCollections.observableArrayList("0", "1", "2", "3", "5", "8", "13", "21");
-    private ObservableList<String> tshirtOptions = FXCollections.observableArrayList("XS", "S", "M", "L", "XL"); // can't parse these into ints for average calculation so I have to remove them 
     private ObservableList<String> sequentialOptions = FXCollections.observableArrayList("1", "2", "3", "4", "5", "6", "7", "8", "9", "10");
     private ObservableList<String> cardOptions = FXCollections.observableArrayList("Ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King");
     private ComboBox<String> mainProjectCB; // Reference to the main project ComboBox in the main window
@@ -38,7 +37,7 @@ public class PlanningPokerModule extends VBox {
         this.setSpacing(10);
         this.setPadding(new Insets(10));
         scaleSelector = new ComboBox<>();
-        scaleSelector.getItems().addAll("Fibonacci", "T-Shirt", "Sequential", "Cards");
+        scaleSelector.getItems().addAll("Fibonacci", "Sequential", "Cards");
         scaleSelector.setValue("Fibonacci"); // Default scale
 
         votingOptions = new ComboBox<>();
@@ -140,9 +139,6 @@ public class PlanningPokerModule extends VBox {
             case "Fibonacci":
                 votingOptions.setItems(fibonacciOptions);
                 break;
-            case "T-Shirt":
-                votingOptions.setItems(tshirtOptions);
-                break;
             case "Sequential":
                 votingOptions.setItems(sequentialOptions);
                 break;
@@ -162,7 +158,7 @@ public class PlanningPokerModule extends VBox {
         // Logic to store these details in the database
         // if entry is invalid (null info)
         if(selectedOption == null || projectName == null) {
-        	System.out.println("Please input roject name and story points");
+        	System.out.println("Please input Project name and Story Points");
         }
         
         else {

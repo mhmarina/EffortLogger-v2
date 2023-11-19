@@ -43,7 +43,7 @@ public class ProjectsBacklogTableOps {
             preparedStatement = connection.prepareStatement(readSQL); //preparing the statement
             resultSet = preparedStatement.executeQuery(); //executing the query
             while(resultSet.next()){ //while loop to iterate through the result set
-                str += "Project Name: " + resultSet.getString("PROJECT_NAME") + ". Story Points:" + resultSet.getString("STORY_POINTS") + "\n";
+                str += "Project Name: " + resultSet.getString("PROJECT_NAME") + ". Story Points: " + resultSet.getString("STORY_POINTS") + "\n";
             }
         }
         catch(SQLException e){ //catching the exception

@@ -51,7 +51,24 @@ public class PlanningPokerTableOps {
             resultSet = preparedStatement.executeQuery(); //executing the query
             while(resultSet.next()){ //while loop to iterate through the result set
             	try {
-                points.add(Integer.parseInt(resultSet.getString("EFFORT_ESTIMATE")));
+            		String myPoints = resultSet.getString("EFFORT_ESTIMATE");
+            		switch(myPoints) {
+            		case "Ace":
+            			points.add(1);
+            			break;
+            		case "Jack":
+            			points.add(11);
+            			break;
+            		case "Queen":
+            			points.add(12);
+            			break;
+            		case "King":
+            			points.add(13);
+            			break;
+            		default:
+                		points.add(Integer.parseInt(myPoints));
+                		break;
+            		}
             	}
             	catch (NumberFormatException e) {
                     System.err.println("Invalid integer: " + resultSet.getString("EFFORT_ESTIMATE"));
