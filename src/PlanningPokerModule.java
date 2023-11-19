@@ -28,7 +28,9 @@ public class PlanningPokerModule extends VBox {
     private ObservableList<String> tshirtOptions = FXCollections.observableArrayList("XS", "S", "M", "L", "XL"); // can't parse these into ints for average calculation so I have to remove them 
     private ObservableList<String> sequentialOptions = FXCollections.observableArrayList("1", "2", "3", "4", "5", "6", "7", "8", "9", "10");
     private ObservableList<String> cardOptions = FXCollections.observableArrayList("Ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King");
-    public PlanningPokerModule() {
+    private ComboBox<String> mainProjectCB; // Reference to the main project ComboBox in the main window
+    public PlanningPokerModule(ComboBox<String> mainProjectCB) {
+        this.mainProjectCB = mainProjectCB;
         initializeComponents();
     }
 
@@ -102,6 +104,7 @@ public class PlanningPokerModule extends VBox {
 					generatedEstimate.setText("0");
 					PlanningPokerTableOps.clearPlanningPokerTable();
 					System.out.println(ProjectsBacklogTableOps.readProjectsBacklog());
+                    mainProjectCB.getItems().add(projectName); // Add the project to the main project ComboBox
 				}
 			}
 			catch(NumberFormatException e) {

@@ -224,4 +224,8 @@ public class MainConsolePane extends VBox {
     	
     	return String.format("%d hours %d minutes %d seconds", h, m, s);
     }
+
+    public ComboBox<String> getProjectCB() {
+    	return projectCB;
+    }
 }

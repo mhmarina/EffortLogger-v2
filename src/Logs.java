@@ -82,6 +82,7 @@ public class Logs extends VBox {
             if(search.getText().isEmpty()) {
             Text logText = new Text(EffortLogTableOps.readEffortLog());
             logsContainer.getChildren().add(logText);
+            backlog.setText(ProjectsBacklogTableOps.readProjectsBacklog());
             }//display all logs if search bar is empty
             else {
             	String target = search.getText();

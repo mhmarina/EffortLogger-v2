@@ -146,7 +146,7 @@ public class EffortLogger extends Application{
 			        
 			        planningPoker = new Tab();
 			        planningPoker.setText("Planning Poker");
-			        PlanningPokerModule pPoker = new PlanningPokerModule();
+			        PlanningPokerModule pPoker = new PlanningPokerModule(mainPane.getProjectCB());
 			        planningPoker.setContent(pPoker);
 			        
 			        logs = new Tab();
