@@ -50,8 +50,21 @@ public class PlanningPokerModule extends VBox {
         commentsArea.setPromptText("Enter your comments here...");
         textInput.getChildren().addAll(projectNameField, commentsArea);
 
-        submitButton = new Button("Submit");
-        submitButton.setOnAction(this::handleSubmit);
+        int newRole = EffortLogger.role;
+        if(newRole == 0 || newRole == 1)
+        {
+            submitButton = new Button("Submit");
+            submitButton.setOnAction(this::handleSubmit); 
+        }
+
+        else
+        {
+        	Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("Invalid permissions");
+            alert.showAndWait();
+        }
 
         scaleSelector.setOnAction(event -> updateVotingOptions());
 
