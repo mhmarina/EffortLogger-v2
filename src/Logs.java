@@ -75,11 +75,11 @@ public class Logs extends VBox {
     }
 
     private class LoadLogsHandler implements EventHandler<ActionEvent> {
-        int newRole = EffortLogger.role;
+//        int newRole = EffortLogger.role;
 
         public void handle(ActionEvent event) {
-            if(newRole == 0 || newRole == 1)
-            {
+//            if(newRole == 0 || newRole == 1)
+//            {
             logsContainer.getChildren().clear();
             System.out.println(search.getText());
             //read from the database
@@ -96,16 +96,16 @@ public class Logs extends VBox {
                 }
                 logsContainer.getChildren().add(logText);
             }
-            }
-
-            else
-            {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error");
-                alert.setHeaderText(null);
-                alert.setContentText("Invalid permissions");
-                alert.showAndWait();
-            }
+//            }
+//
+//            else
+//            {
+//                Alert alert = new Alert(Alert.AlertType.ERROR);
+//                alert.setTitle("Error");
+//                alert.setHeaderText(null);
+//                alert.setContentText("Invalid permissions");
+//                alert.showAndWait();
+//            }
         }
     }
 }
